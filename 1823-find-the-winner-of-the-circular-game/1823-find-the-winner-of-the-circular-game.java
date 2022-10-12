@@ -1,5 +1,6 @@
 class Solution {
-
+    //Using Mod concept
+    //Whenever there is something circular type we thing about mod, CLL, DQ
     int solve(int n, int k) {
         if (n == 1) {
             return 0;
