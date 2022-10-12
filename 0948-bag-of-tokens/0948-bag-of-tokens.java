@@ -9,7 +9,7 @@ class Solution {
         while (i <= j) {
             if (tokens[i] <= power) {
                 power -= tokens[i++];
-                res = Math.max(res, ++points);
+                res = ++points;
             } 
             
             else if (points > 0) {
