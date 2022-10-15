@@ -8,27 +8,27 @@ class Solution {
             int size = queue.size();
 
             for (int i = 0; i < size; i++) {
-                int point = queue.poll();
+                int index = queue.poll();
 
-                //If we want to move Left i..e point - arr[point];
-                if (point - arr[point] >= 0) {
-                    if (arr[point - arr[point]] == 0) {
+                //If we want to move Left i..e index - arr[index];
+                if (index - arr[index] >= 0) {
+                    if (arr[index - arr[index]] == 0) {
                         return true;
-                    } else if (arr[point - arr[point]] > 0) {
-                        queue.add(point - arr[point]);
+                    } else if (arr[index - arr[index]] > 0) {
+                        queue.add(index - arr[index]);
                     }
                 }
 
-                //If we want to move Right i..e point + arr[point];
-                if (point + arr[point] < arr.length) {
-                    if (arr[point + arr[point]] == 0) {
+                //If we want to move Right i..e index + arr[index];
+                if (index + arr[index] < arr.length) {
+                    if (arr[index + arr[index]] == 0) {
                         return true;
-                    } else if (arr[point + arr[point]] > 0) {
-                        queue.add(point + arr[point]);
+                    } else if (arr[index + arr[index]] > 0) {
+                        queue.add(index + arr[index]);
                     }
                 }
 
-                arr[point] = -1;
+                arr[index] = -1;
             }
         }
 
