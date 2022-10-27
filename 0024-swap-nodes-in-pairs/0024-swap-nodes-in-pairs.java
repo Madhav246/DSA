@@ -15,11 +15,20 @@ class Solution {
             return head;
         }
 
-        ListNode temp = head.next;
-        head.next = swapPairs(head.next.next);
+        ListNode dummy = new ListNode(-1);
 
-        temp.next = head;
+        ListNode current = head;
+        ListNode previous = dummy;
 
-        return temp;
+        while (current != null && current.next != null) {
+            previous.next = current.next;
+            current.next = previous.next.next;
+            previous.next.next = current;
+
+            previous = current;
+            current = current.next;
+        }
+
+        return dummy.next;
     }
 }
