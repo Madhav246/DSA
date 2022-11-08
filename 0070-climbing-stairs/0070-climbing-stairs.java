@@ -1,19 +1,14 @@
 class Solution {
-//Memoization :
+//Tabulation :
+    //upar se neeche jaa rahe hai !
     public int solve(int[] dp, int index) {
-        if (index == 0) {
-            return 1;
-        }
-
-        if (index == 1) {
-            return 1;
-        }
+       dp[0] = 1;
+       dp[1] = 1;
         
-        if (dp[index] != -1) {
-            return dp[index];
-        }
-
-        return dp[index] = solve(dp, index - 1) + solve(dp, index - 2);
+       for(int i=2; i<=index; i++){
+           dp[i] = dp[i-1] + dp[i-2];
+       }
+        return dp[index];
     }
 
     public int climbStairs(int n) {
