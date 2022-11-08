@@ -1,21 +1,21 @@
 class Solution {
-
-    //Memoization
+//Tabulation :
     public int solve(int index, int[] nums, int[] dp) {
-        if (index == 0) {
-            return nums[index];
-        }
-        if (index < 0) {
-            return 0;
-        }
-        if (dp[index] != -1) {
-            return dp[index];
+        dp[0] = nums[0];
+        int negative = 0;
+
+        for (int i = 1; i < index; i++) {
+            int pick = nums[i];
+
+            if (i > 1) {
+                pick += dp[i - 2];
+            }
+            int notPick = 0 + dp[i - 1];
+
+            dp[i] = Math.max(pick, notPick);
         }
 
-        int pick = nums[index] + solve(index - 2, nums, dp);
-        int notPick = 0 + solve(index - 1, nums, dp);
-
-        return dp[index] = Math.max(pick, notPick);
+        return dp[index - 1];
     }
 
     public int rob(int[] nums) {
@@ -23,6 +23,6 @@ class Solution {
         int[] dp = new int[n];
         Arrays.fill(dp, -1);
 
-        return solve(n - 1, nums, dp);
+        return solve(n, nums, dp);
     }
 }
