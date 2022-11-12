@@ -1,29 +1,8 @@
 class Solution {
-
-    public int solve(int i, int j, int[][] matrix, int[][] dp) {
-        if (j < 0 || j >= matrix[0].length) {
-            return (int) 1e9;
-        }
-
-        if (i == 0) {
-            return matrix[i][j];
-        }
-
-        if (dp[i][j] != -1) {
-            return dp[i][j];
-        }
-
-        int up = matrix[i][j] + solve(i - 1, j, matrix, dp);
-        int leftDiagonal = matrix[i][j] + solve(i - 1, j - 1, matrix, dp);
-        int rightDiagonal = matrix[i][j] + solve(i - 1, j + 1, matrix, dp);
-
-        return dp[i][j] = Math.min(up, Math.min(leftDiagonal, rightDiagonal));
-    }
-
+    //Tabulation :
     public int minFallingPathSum(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
-        int mini = Integer.MAX_VALUE;
 
         int[][] dp = new int[m][n];
         for (int[] row : dp) {
@@ -31,7 +10,34 @@ class Solution {
         }
 
         for (int j = 0; j < n; j++) {
-            mini = Math.min(solve(n - 1, j, matrix, dp), mini);
+            dp[0][j] = matrix[0][j];
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int up = matrix[i][j] + dp[i - 1][j];
+                int leftDiagonal = matrix[i][j];
+                if (j - 1 >= 0) {
+                    leftDiagonal += dp[i - 1][j - 1];
+                } else {
+                    leftDiagonal += (int) 1e9;
+                }
+
+                int rightDiagonal = matrix[i][j];
+                if (j + 1 < m) {
+                    rightDiagonal += dp[i - 1][j + 1];
+                } else {
+                    rightDiagonal += (int) 1e9;
+                }
+
+                dp[i][j] = Math.min(up, Math.min(leftDiagonal, rightDiagonal));
+            }
+        }
+
+        int mini = dp[n - 1][0];
+
+        for (int j = 1; j < n; j++) {
+            mini = Math.min(mini, dp[m - 1][j]);
         }
 
         return mini;
