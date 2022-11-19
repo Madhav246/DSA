@@ -1,39 +1,5 @@
 class Solution {
-
-    //     public boolean solve(int i, int j, String pattern, String text, boolean[][] dp) {
-    //         if (i < 0 && j < 0) {
-    //             return true;
-    //         }
-
-    //         if (i < 0 && j >= 0) {
-    //             return false;
-    //         }
-
-    //         if (i >= 0 && j < 0) {
-    //             for (int ii = 0; ii <= i; ii++) {
-    //                 if (pattern.charAt(ii) != '*') {
-    //                     return false;
-    //                 }
-    //             }
-
-    //             return true;
-    //         }
-
-    //         if (dp[i][j] == true) {
-    //             return true;
-    //         }
-
-    //         if (pattern.charAt(i) == text.charAt(j) || pattern.charAt(i) == '?') {
-    //             return solve(i - 1, j - 1, pattern, text, dp);
-    //         }
-
-    //         if (pattern.charAt(i) == '*') {
-    //             return dp[i][j] = (solve(i - 1, j, pattern, text, dp) == true || solve(i, j - 1, pattern, text, dp) == true) ? true : false;
-    //         }
-
-    //         return false;
-    //     }
-
+//Tabulation :
     public boolean isMatch(String text, String pattern) {
         int n = pattern.length();
         int m = text.length();
