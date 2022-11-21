@@ -1,5 +1,4 @@
 class Solution {
-//Tabulation
     public int maxProfit(int[] prices) {
         int n = prices.length;
         int[][][] dp = new int[n + 1][2][3];
@@ -7,7 +6,6 @@ class Solution {
         for (int index = n - 1; index >= 0; index--) {
             for (int canBuy = 0; canBuy <= 1; canBuy++) {
                 for (int transactionCount = 1; transactionCount <= 2; transactionCount++) {
-                    int profit = 0;
                     if (canBuy == 1) {
                         dp[index][canBuy][transactionCount] = Math.max(-prices[index] + dp[index + 1][0][transactionCount], 0 + dp[index + 1][1][transactionCount]);
                     } else {
