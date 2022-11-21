@@ -1,32 +1,21 @@
 class Solution {
-
-    public int solve(int index, int n, int[] prices, int canBuy, int transactionCount, int[][][] dp) {
-        if (index == n || transactionCount == 0) {
-            return 0;
-        }
-
-        if (dp[index][canBuy][transactionCount] != -1) {
-            return dp[index][canBuy][transactionCount];
-        }
-
-        int profit = 0;
-        if (canBuy == 1) {
-            profit += Math.max(-prices[index] + solve(index + 1, n, prices, 0, transactionCount, dp), 0 + solve(index + 1, n, prices, 1, transactionCount, dp));
-        } else {
-            profit += Math.max(prices[index] + solve(index + 1, n, prices, 1, transactionCount - 1, dp), 0 + solve(index + 1, n, prices, 0, transactionCount, dp));
-        }
-
-        return dp[index][canBuy][transactionCount] = profit;
-    }
-
+//Tabulation
     public int maxProfit(int[] prices) {
-        int[][][] dp = new int[prices.length][2][3];
+        int n = prices.length;
+        int[][][] dp = new int[n + 1][2][3];
 
-        for (int[][] row1 : dp) {
-            for (int[] row2 : row1) {
-                Arrays.fill(row2, -1);
+        for (int index = n - 1; index >= 0; index--) {
+            for (int canBuy = 0; canBuy <= 1; canBuy++) {
+                for (int transactionCount = 1; transactionCount <= 2; transactionCount++) {
+                    int profit = 0;
+                    if (canBuy == 1) {
+                        dp[index][canBuy][transactionCount] = Math.max(-prices[index] + dp[index + 1][0][transactionCount], 0 + dp[index + 1][1][transactionCount]);
+                    } else {
+                        dp[index][canBuy][transactionCount] = Math.max(prices[index] + dp[index + 1][1][transactionCount - 1], 0 + dp[index + 1][0][transactionCount]);
+                    }
+                }
             }
         }
-        return solve(0, prices.length, prices, 1, 2, dp);
+        return dp[0][1][2];
     }
 }
