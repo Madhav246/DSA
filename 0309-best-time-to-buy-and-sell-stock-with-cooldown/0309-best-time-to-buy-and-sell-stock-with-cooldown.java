@@ -1,35 +1,27 @@
 class Solution {
-    
-    public int solve(int index, int canBuy, int[] prices, int n, int[][] dp){
-        if(index >= n){
-            return 0;
-        }
-        
-        if(dp[index][canBuy] != -1){
-            return dp[index][canBuy];
-        }
-        
-        int profit = 0;
-        if(canBuy == 1){
-            profit += Math.max(-prices[index] + solve(index + 1, 0, prices, n, dp),
-                               0 + solve(index + 1, 1, prices, n, dp));
-        }
-        
-        else{
-            profit += Math.max(prices[index] + solve(index + 2, 1, prices, n, dp),
-                              0 + solve(index + 1, 0, prices, n, dp));
-        }
-        
-        return dp[index][canBuy] = profit;
-    }
+    //Tabulation :
     public int maxProfit(int[] prices) {
         int n = prices.length;
         
-        int[][] dp = new int[n][2];
-        for(int[] row : dp){
-            Arrays.fill(row, -1);
+        int[][] dp = new int[n + 2][2];
+        
+        dp[n][0] = dp[n][1] = 0;
+        
+        for(int index = n - 1; index >=0; index --){
+            for(int canBuy = 0; canBuy <= 1; canBuy++){
+                if(canBuy == 1){
+                    dp[index][canBuy] = Math.max(-prices[index] +dp[index + 1][0],
+                                       0 + dp[index + 1][1]);
+                }
+        
+                else{
+                    dp[index][canBuy] = Math.max(prices[index] + dp[index + 2][1],
+                                      0 + dp[index + 1][0]);
+                }
+            }
         }
-        return solve(0, 1, prices, n, dp);
+        
+        return dp[0][1];
         
     }
 }
