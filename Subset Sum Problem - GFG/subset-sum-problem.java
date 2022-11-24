@@ -35,31 +35,27 @@ class GFG
 
 class Solution{
     static Boolean isSubsetSum(int N, int arr[], int sum){
-        boolean[][] dp = new boolean[N][sum + 1];
+        boolean[] prev = new boolean[sum + 1];
+        boolean[] curr = new boolean[sum + 1];
         
-        for(boolean[] row : dp){
-            Arrays.fill(row, false);
-        }
+        prev[0] = curr[0] = true;
         
-        for(int i=0; i<N; i++){
-            dp[i][0] = true;
-        }
-        
-        dp[0][arr[0]] = true;
+        prev[arr[0]] = true;
         
         for(int index = 1; index < N; index ++){
             for(int target = 1; target <= sum; target ++){
-                boolean notTake = dp[index - 1][target];
+                boolean notTake = prev[target];
         
                 boolean take = false;
                 if(target >= arr[index]){
-                    take = dp[index - 1][target - arr[index]];
+                    take = prev[target - arr[index]];
                 }
                 
-                dp[index][target] = take || notTake;
+                curr[target] = take || notTake;
             }
+            prev = curr.clone();
         }
         
-        return dp[N - 1][sum];
+        return prev[sum];
     }
 }
