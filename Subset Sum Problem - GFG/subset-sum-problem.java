@@ -34,37 +34,32 @@ class GFG
 //User function Template for Java
 
 class Solution{
-    static boolean solve(int index, int n, int[] arr, int target, int[][] dp){
-        if(target == 0){
-            return true;
-        }
-        
-        if(index == 0){
-            return arr[0] == target;
-        }
-        
-        if(dp[index][target] != -1){
-            return dp[index][target] == 1 ? true : false;
-        }
-        
-        boolean notTake = solve(index - 1, n, arr, target, dp);
-        
-        boolean take = false;
-        if(target >= arr[index]){
-            take = solve(index - 1, n, arr, target - arr[index], dp);
-        }
-        
-        dp[index][target] = take || notTake ? 1 : 0;
-        
-        return take || notTake;
-    }
-    
     static Boolean isSubsetSum(int N, int arr[], int sum){
-        int[][] dp = new int[N][sum + 1];
+        boolean[][] dp = new boolean[N][sum + 1];
         
-        for(int[] row : dp){
-            Arrays.fill(row, -1);
+        for(boolean[] row : dp){
+            Arrays.fill(row, false);
         }
-        return solve(N - 1, N, arr, sum, dp);
+        
+        for(int i=0; i<N; i++){
+            dp[i][0] = true;
+        }
+        
+        dp[0][arr[0]] = true;
+        
+        for(int index = 1; index < N; index ++){
+            for(int target = 1; target <= sum; target ++){
+                boolean notTake = dp[index - 1][target];
+        
+                boolean take = false;
+                if(target >= arr[index]){
+                    take = dp[index - 1][target - arr[index]];
+                }
+                
+                dp[index][target] = take || notTake;
+            }
+        }
+        
+        return dp[N - 1][sum];
     }
 }
