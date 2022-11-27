@@ -48,33 +48,28 @@ class gfg
 
 class Solution 
 { 
-    //Function to return max value that can be put in knapsack of capacity W.
-    static int solve(int index, int weight, int[] wt, int[] val, int[][] dp){
-        if(index == 0){
-            if(wt[index] <= weight) {return val[index];}
-            return 0;
-        }
-        
-        if(dp[index][weight] != -1){
-            return dp[index][weight];
-        }
-        
-        int notTake = 0 + solve(index - 1, weight, wt, val, dp);
-        int take = 0;
-        if(wt[index] <= weight){
-            take += val[index] + solve(index - 1, weight - wt[index], wt, val, dp);
-        }
-        
-        return dp[index][weight] = Math.max(take, notTake);
-    }
-    
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
          int[][] dp = new int[n][W + 1];
-         for(int[] row : dp){
-             Arrays.fill(row, -1);
+         
+         //Base Case :
+         for(int i = wt[0]; i<=W; i++){
+             dp[0][i] = val[0];
          }
-         return solve(n - 1, W, wt, val, dp);
+         
+         for(int index = 1; index < n; index++){
+             for(int weight = 0; weight<=W; weight++){
+                    int notTake = 0 + dp[index - 1][weight];
+                    int take = 0;
+                    if(wt[index] <= weight){
+                        take += val[index] + dp[index - 1][weight - wt[index]];
+                    }
+                    
+                    dp[index][weight] = Math.max(take, notTake);
+             }
+         }
+         
+         return dp[n - 1][W];
     } 
 }
 
