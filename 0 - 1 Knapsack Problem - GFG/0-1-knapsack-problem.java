@@ -50,26 +50,28 @@ class Solution
 { 
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
-         int[][] dp = new int[n][W + 1];
+         int[] prev = new int[W + 1];
+         int[] curr = new int[W + 1];
          
          //Base Case :
          for(int i = wt[0]; i<=W; i++){
-             dp[0][i] = val[0];
+             prev[i] = val[0];
          }
          
          for(int index = 1; index < n; index++){
              for(int weight = 0; weight<=W; weight++){
-                    int notTake = 0 + dp[index - 1][weight];
+                    int notTake = 0 + prev[weight];
                     int take = 0;
                     if(wt[index] <= weight){
-                        take += val[index] + dp[index - 1][weight - wt[index]];
+                        take += val[index] + prev[weight - wt[index]];
                     }
                     
-                    dp[index][weight] = Math.max(take, notTake);
+                    curr[weight] = Math.max(take, notTake);
              }
+             prev = curr.clone();
          }
          
-         return dp[n - 1][W];
+         return prev[W];
     } 
 }
 
