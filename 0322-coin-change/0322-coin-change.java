@@ -1,38 +1,35 @@
 class Solution {
-
-    public int solve(int[] coins, int target, int[] dp) {
-        if (target == 0) {
-            return 0;
+    public int solve(int index, int[] coins, int target, int[][] dp){
+        if(index == 0){
+            if(target % coins[index] == 0) return target / coins[index];
+            else return (int)1e9;
         }
-
-        if (target < 0) {
-            return Integer.MAX_VALUE;
+        
+        if(dp[index][target] != -1){
+            return dp[index][target];
         }
-
-        if (dp[target] != -1) {
-            return dp[target];
+        
+        int notTake = 0 + solve(index - 1, coins, target, dp);
+        int take = (int)1e9;
+        if(coins[index] <= target){
+            take = 1 + solve(index, coins, target - coins[index], dp);
         }
-
-        int mini = Integer.MAX_VALUE;
-
-        for (int i = 0; i < coins.length; i++) {
-            int ans = solve(coins, target - coins[i], dp);
-            if (ans != Integer.MAX_VALUE) {
-                mini = Math.min(mini, 1 + ans);
-            }
-        }
-        dp[target] = mini;
-        return dp[target];
+        
+        return dp[index][target] = Math.min(notTake, take);
     }
-
+    
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount + 1];
-        Arrays.fill(dp, -1);
-
-        int ans = solve(coins, amount, dp);
-        if (ans == Integer.MAX_VALUE) {
-            return -1;
+        int n = coins.length;
+        
+        int[][] dp = new int[n][amount + 1];
+        for(int[] row : dp){
+            Arrays.fill(row, -1);
         }
+        
+        int ans = solve(n - 1 , coins, amount, dp);
+        if(ans >= (int)1e9){
+            return -1;
+        } 
         return ans;
     }
 }
