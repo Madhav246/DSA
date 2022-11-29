@@ -33,47 +33,28 @@ class GFG{
 //User function Template for Java
 
 class Solution{
-    
-    static int solve(int index, int weight, int[] val, int[] wt, int[][] dp){
-        if(index == 0){
-            if(wt[0] <= weight) return (weight/wt[0]) * val[0];
-            else return 0;
-        }
-        
-        if(dp[index][weight] != -1){
-            return dp[index][weight];
-        }
-        
-        int notTake = 0 + solve(index - 1, weight, val, wt, dp);
-        int take = 0;
-        if(wt[index] <= weight){
-            take = val[index] + solve(index, weight - wt[index], val, wt, dp);
-        }
-        
-        return dp[index][weight] = Math.max(notTake, take);
-    }
-    
-    
     static int knapSack(int N, int W, int val[], int wt[])
     {
-        int[][] dp = new int[N][W + 1];
+        int[] prev = new int[W + 1];
+        int[] curr = new int[W + 1];
         
         for(int i=wt[0]; i<=W; i++){
-            dp[0][i] = (i/wt[0]) * val[0];
+            prev[i] = (i/wt[0]) * val[0];
         }
         
         for(int index = 1; index<N; index ++){
             for(int weight=0; weight<=W; weight ++){
-                int notTake = 0 + dp[index - 1][weight];
+                int notTake = 0 + prev[weight];
                 int take = 0;
                 if(wt[index] <= weight){
-                    take = val[index] + dp[index][weight - wt[index]];
+                    take = val[index] + curr[weight - wt[index]];
                 }
                 
-                dp[index][weight] = Math.max(notTake, take);
+                curr[weight] = Math.max(notTake, take);
             }
+            prev = curr.clone();
         }
         
-        return dp[N - 1][W];
+        return prev[W];
     }
 }
