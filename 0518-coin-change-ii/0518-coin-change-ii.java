@@ -3,26 +3,28 @@ class Solution {
     public int change(int amount, int[] coins) {
         int n = coins.length;
 
-        int[][] dp = new int[n][amount + 1];
+        int[] prev = new int[amount + 1];
+        int[] curr = new int[amount + 1];
 
         for (int target = 0; target <= amount; target++) {
             if (target % coins[0] == 0) {
-                dp[0][target] = 1;
+                prev[target] = 1;
             }
         }
 
         for (int index = 1; index < n; index++) {
             for (int target = 0; target <= amount; target++) {
-                int notTake = dp[index - 1][target];
+                int notTake = prev[target];
                 int take = 0;
                 if (coins[index] <= target) {
-                    take = dp[index][target - coins[index]];
+                    take = curr[target - coins[index]];
                 }
 
-                dp[index][target] = take + notTake;
+                curr[target] = take + notTake;
             }
+            prev = curr.clone();
         }
 
-        return dp[n - 1][amount];
+        return prev[amount];
     }
 }
