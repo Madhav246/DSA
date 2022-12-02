@@ -1,5 +1,4 @@
 class Solution {
-
     public boolean checkPossible(String s1, String s2) {
         if (s1.length() != s2.length() + 1) return false;
 
@@ -24,8 +23,8 @@ class Solution {
         int[] dp = new int[n];
         Arrays.fill(dp, 1);
         int maxi = -1;
-        
-        Arrays.sort(words,(a,b)->a.length() - b.length());
+
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
 
         for (int index = 0; index < n; index++) {
             for (int prevIndex = 0; prevIndex < index; prevIndex++) {
