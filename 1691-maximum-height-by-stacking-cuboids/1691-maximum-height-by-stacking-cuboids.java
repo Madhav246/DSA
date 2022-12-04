@@ -1,7 +1,6 @@
 class Solution {
     public int lis(int n, int[][] nums) {
         int[] dp = new int[n];
-        Arrays.fill(dp, 1);
         int maxi = 1;
 
         for (int index = 0; index < n; index++) {
@@ -9,7 +8,10 @@ class Solution {
             
             for (int prevIndex = 0; prevIndex < index; prevIndex++) {
                 
-                if (nums[index][0] >= nums[prevIndex][0] && nums[index][1] >= nums[prevIndex][1] && nums[index][2] >= nums[prevIndex][2]) {
+                if (nums[index][0] >= nums[prevIndex][0] &&
+                    nums[index][1] >= nums[prevIndex][1] && 
+                    nums[index][2] >= nums[prevIndex][2]) {
+                    
                     dp[index] = Math.max(dp[index], nums[index][2] + dp[prevIndex]);
                 }
             }
