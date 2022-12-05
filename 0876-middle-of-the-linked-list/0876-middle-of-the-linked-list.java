@@ -14,9 +14,6 @@ class Solution {
         ListNode slowPtr = head;
         ListNode fastPtr = head;
 
-        //fastPtr != null for handling even length.
-        //fastPtr.next != null for handling odd length.
-
         while (fastPtr != null && fastPtr.next != null) {
             slowPtr = slowPtr.next;
             fastPtr = fastPtr.next.next;
