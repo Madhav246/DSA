@@ -31,7 +31,6 @@ class GFG {
 
 class Solve {
     int[] findTwoElement(int arr[], int n) {
-        
         int[] freq = new int[n + 1];
         int[] ans = new int[2];
         
@@ -43,7 +42,7 @@ class Solve {
             if(freq[i] > 1){
                 ans[0] = i;
             }
-            else if(freq[i] == 0){
+            if(freq[i] == 0){
                 ans[1] = i;
             }
         }
