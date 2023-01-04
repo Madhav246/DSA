@@ -22,11 +22,7 @@ class GFG {
 }
 // } Driver Code Ends
 
-
-// User function Template for Java
-
 class Solution {
-
     int search(String pat, String txt) {
         HashMap<Character, Integer> map = new HashMap<>();
         
@@ -67,11 +63,10 @@ class Solution {
                     map.put(ch1, map.get(ch1) + 1);
                     
                     if(map.get(ch1) == 1){
-                    count++;
+                        count++;
                     }
                 }
-            
-                
+
                 i++;
                 j++;
             }
@@ -80,18 +75,6 @@ class Solution {
         return ans;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
